@@ -22,4 +22,22 @@ public class LookUpController {
         return String.format("Hello! You're %s and you'll become a(n) %s...\n", username, role);
     }
 
+
+    @Value("${db.config.driver}")
+    private String driver;
+    @Value("${db.config.url}")
+    private String url;
+    @Value("${db.config.user}")
+    private String user;
+    @Value("${db.config.password}")
+    private String password;
+
+    @RequestMapping(
+            value = "/dbinfo",
+            method = RequestMethod.GET
+    )
+    public DBinfo dbinfo(){
+        return new DBinfo(driver, url, user, password);
+    }
+
 }
