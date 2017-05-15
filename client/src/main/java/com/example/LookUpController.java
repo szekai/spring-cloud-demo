@@ -13,13 +13,16 @@ public class LookUpController {
     @Value("${user.role}")
     private String role;
 
+    @Value("${info.foo}")
+    private String info;
+
     @RequestMapping(
             value = "/whoami/{username}",
             method = RequestMethod.GET,
             produces = MediaType.TEXT_PLAIN_VALUE
     )
     public String whoami(@PathVariable("username") String username){
-        return String.format("Hello! You're %s and you'll become a(n) %s...\n", username, role);
+        return String.format("Hello! You're %s and you'll become a %s...\n Info from application.properties %s", username, role, info);
     }
 
 
