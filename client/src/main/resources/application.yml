@@ -1,3 +1,8 @@
+spring.boot.admin.url: http://localhost:8090
+management.security.enabled: false
+endpoints.enabled: true
+endpoints.restart.enabled: true
+
 info:
   test2: test2 from local
   foo: foo from local
