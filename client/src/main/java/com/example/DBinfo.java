@@ -1,6 +1,8 @@
 package com.example;
 
-public class DBinfo {
+import org.springframework.hateoas.ResourceSupport;
+
+public class DBinfo extends ResourceSupport {
     private String driver;
     private String url;
     private String user;

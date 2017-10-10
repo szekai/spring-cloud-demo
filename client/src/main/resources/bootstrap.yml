@@ -1,6 +1,7 @@
 spring.application.name: config-client
 spring.profiles.active: development
 #spring.profiles.active: production
+spring.cloud.config.label: feature
 spring:
   cloud:
     config:
