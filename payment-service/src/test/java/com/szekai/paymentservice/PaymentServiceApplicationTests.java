@@ -1,13 +1,13 @@
-package com.example.eurekaserver;
+package com.szekai.paymentservice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-public class EurekaServerApplicationTests {
+class PaymentServiceApplicationTests {
 
 	@Test
-	public void contextLoads() {
+	void contextLoads() {
 	}
 
 }
