@@ -1,13 +1,13 @@
-package com.example.eurekaclient;
+package com.szekai.apigateway;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-public class EurekaClientApplicationTests {
+class ApiGatewayApplicationTests {
 
 	@Test
-	public void contextLoads() {
+	void contextLoads() {
 	}
 
 }

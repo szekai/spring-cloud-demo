@@ -1,11 +1,16 @@
 spring.application.name: payment-service
 server.port: 8000
 eureka:
+  instance:
+    leaseRenewalIntervalInSeconds: 10
+    appname: payment-service
   client:
+    registryFetchIntervalSeconds: 5
     service-url:
       default-zone: http://localhost:8761/eureka
+    healthcheck:
+      enabled: true
+
   register-with-eureka: true
   fetch-registry: true
-  instance:
-    appname: payment-service
 

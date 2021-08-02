@@ -1,13 +1,13 @@
-package com.example.eurekaclient;
+package com.szekai.springbootadminserver;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-public class EurekaClientApplicationTests {
+class SpringbootAdminServerApplicationTests {
 
 	@Test
-	public void contextLoads() {
+	void contextLoads() {
 	}
 
 }

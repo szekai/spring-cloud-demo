@@ -1,12 +1,17 @@
-spring.application.name: Eureka Client
+spring.application.name: eureka-client
 server.port: 8081
 
 eureka:
   instance:
     leaseRenewalIntervalInSeconds: 10
+    appname: Eureka Client
   client:
     registryFetchIntervalSeconds: 5
     serviceUrl:
       defaultZone: ${EUREKA_SERVICE_URL:http://localhost:8761}/eureka/
+    healthcheck:
+      enabled: true
 
 management.security.enabled: false
+# Show details of health endpoint
+management.endpoint.health.show-details: always

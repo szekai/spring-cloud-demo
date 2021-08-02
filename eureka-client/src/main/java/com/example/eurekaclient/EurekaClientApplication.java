@@ -17,7 +17,7 @@ public class EurekaClientApplication {
 		SpringApplication.run(EurekaClientApplication.class, args);
 	}
 
-	@RequestMapping("/")
+	@RequestMapping("/demo")
 	public String home() {
 		return "Hello world";
 	}
