@@ -1,5 +1,13 @@
-spring.application.name: cloud dashboard
+spring.application.name: cloud-dashboard
 server.port: 8090
+spring:
+  security.user:
+      name: "admin"
+      password: "admin"
+
+management.endpoints.web.exposure.include: "*"
+management.endpoint.health.show-details: always
+
 eureka:
   instance:
     leaseRenewalIntervalInSeconds: 10

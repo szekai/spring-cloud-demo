@@ -1,5 +1,25 @@
 spring.application.name: payment-service
 server.port: 8000
+
+#basic auth creddentials
+spring.security.user:
+  name: "client"
+  password: "client"
+
+#configs to connect to a secured server
+spring.boot.admin.client:
+  url: http://localhost:8090
+  username: "admin"
+  password: "admin"
+#configs to give secured server info
+  instance.metadata.user:
+    name: ${spring.security.user.name}
+    password: ${spring.security.user.password}
+
+
+management.endpoints.web.exposure.include: "*"
+management.endpoint.health.show-details: always
+
 eureka:
   instance:
     leaseRenewalIntervalInSeconds: 10

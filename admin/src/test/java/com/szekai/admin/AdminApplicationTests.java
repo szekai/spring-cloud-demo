@@ -1,13 +1,13 @@
-package com.szekai.springbootadminserver;
+package com.szekai.admin;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class SpringbootAdminServerApplicationTests {
+public class AdminApplicationTests {
 
 	@Test
-	void contextLoads() {
+	public void contextLoads() {
 	}
 
 }

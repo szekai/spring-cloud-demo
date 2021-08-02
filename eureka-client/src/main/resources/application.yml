@@ -1,6 +1,21 @@
 spring.application.name: eureka-client
 server.port: 8081
 
+#basic auth creddentials
+spring.security.user:
+  name: "client"
+  password: "client"
+
+#configs to connect to a secured server
+spring.boot.admin.client:
+  url: http://localhost:8090
+  username: "admin"
+  password: "admin"
+  #configs to give secured server info
+  instance.metadata.user:
+    name: ${spring.security.user.name}
+    password: ${spring.security.user.password}
+
 eureka:
   instance:
     leaseRenewalIntervalInSeconds: 10
@@ -15,3 +30,4 @@ eureka:
 management.security.enabled: false
 # Show details of health endpoint
 management.endpoint.health.show-details: always
+management.endpoints.web.exposure.include: "*"
