@@ -26,6 +26,8 @@ eureka:
       defaultZone: ${EUREKA_SERVICE_URL:http://localhost:8761}/eureka/
     healthcheck:
       enabled: true
+  register-with-eureka: true
+  fetch-registry: true
 
 management.security.enabled: false
 # Show details of health endpoint

@@ -13,4 +13,5 @@ public class ConfigurationProvider {
     public WebClient.Builder loadBalancedWebClientBuilder() {
         return WebClient.builder();
     }
+
 }

@@ -1,9 +1,10 @@
 package com.szekai.OrderService.controller;
 
+import com.szekai.OrderService.vo.Order;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.kie.api.runtime.KieSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
 @RestController
@@ -11,9 +12,20 @@ import reactor.core.publisher.Mono;
 @RequiredArgsConstructor
 public class OrderController {
     private final PaymentWebClient webClientController;
+    @Autowired
+    private KieSession session;
 
     @GetMapping("/greet")
     public Mono<String> greetDemo() {
         return webClientController.getUserFromWebClient("admin");
+    }
+
+
+
+    @PostMapping("/order")
+    public Order orderNow(@RequestBody Order order) {
+        session.insert(order);
+        session.fireAllRules();
+        return order;
     }
 }
