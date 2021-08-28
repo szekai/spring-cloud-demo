@@ -1,11 +1,14 @@
 package com.szekai.OrderService.controller;
 
+import com.szekai.OrderService.service.PaymentWebClient;
 import com.szekai.OrderService.vo.Order;
 import lombok.RequiredArgsConstructor;
 import org.kie.api.runtime.KieSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
+
+import java.util.concurrent.TimeoutException;
 
 @RestController
 @RequestMapping("/order")
@@ -16,8 +19,9 @@ public class OrderController {
     private KieSession session;
 
     @GetMapping("/greet")
-    public Mono<String> greetDemo() {
-        return webClientController.getUserFromWebClient("admin");
+    public Mono<String> greetDemo() throws TimeoutException {
+        return webClientController.getPaymentFromWebClient("admin")
+                .retry(5).map(greeting -> String.format("%s %s", "Order", greeting));
     }
 
 

@@ -2,9 +2,9 @@ spring.application.name: payment-service
 server.port: 8000
 
 #basic auth creddentials
-spring.security.user:
-  name: "client"
-  password: "client"
+#spring.security.user:
+#  name: "client"
+#  password: "client"
 
 #configs to connect to a secured server
 spring.boot.admin.client:
@@ -12,9 +12,9 @@ spring.boot.admin.client:
   username: "admin"
   password: "admin"
 #configs to give secured server info
-  instance.metadata.user:
-    name: ${spring.security.user.name}
-    password: ${spring.security.user.password}
+#  instance.metadata.user:
+#    name: ${spring.security.user.name}
+#    password: ${spring.security.user.password}
 
 
 management.endpoints.web.exposure.include: "*"
@@ -32,4 +32,8 @@ eureka:
       enabled: true
   register-with-eureka: true
   fetch-registry: true
+
+successful:
+  call:
+    divisor: 2
 
