@@ -25,8 +25,8 @@ public class PaymentController {
      */
     @GetMapping("/admin")
     public ResponseEntity<String> getAdmin() {
-        log.info("Service unavaiable");
         if (isServiceUnavailable()) {
+            log.info("Service unavaiable");
             return new ResponseEntity<>(HttpStatus.SERVICE_UNAVAILABLE);
         }
         log.info("Service available");

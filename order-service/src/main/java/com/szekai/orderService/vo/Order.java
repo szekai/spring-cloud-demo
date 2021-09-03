@@ -1,4 +1,4 @@
-package com.szekai.OrderService.vo;
+package com.szekai.orderService.vo;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

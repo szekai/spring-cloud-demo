@@ -1,5 +1,5 @@
 package KieRule;
-import com.szekai.OrderService.vo.Order;
+import com.szekai.orderService.vo.Order;
 
 rule "HDFC"
 

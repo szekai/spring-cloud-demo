@@ -1,7 +1,7 @@
-package com.szekai.OrderService.controller;
+package com.szekai.orderService.controller;
 
-import com.szekai.OrderService.service.PaymentWebClient;
-import com.szekai.OrderService.vo.Order;
+import com.szekai.orderService.service.PaymentWebClient;
+import com.szekai.orderService.vo.Order;
 import lombok.RequiredArgsConstructor;
 import org.kie.api.runtime.KieSession;
 import org.springframework.beans.factory.annotation.Autowired;

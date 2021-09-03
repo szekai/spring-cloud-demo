@@ -22,7 +22,8 @@ management.endpoint.health.show-details: always
 
 eureka:
   instance:
-    leaseRenewalIntervalInSeconds: 10
+    leaseRenewalIntervalInSeconds: 5
+    leaseExpirationDurationInSeconds: 10
     appname: payment-service
   client:
     registryFetchIntervalSeconds: 5

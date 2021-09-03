@@ -21,7 +21,8 @@ spring.boot.admin.client:
 
 eureka:
   instance:
-    leaseRenewalIntervalInSeconds: 10
+    leaseRenewalIntervalInSeconds: 5
+    leaseExpirationDurationInSeconds: 10
     appname: order-service
   client:
     registryFetchIntervalSeconds: 5
@@ -59,13 +60,13 @@ resilience4j.ratelimiter:
       limitRefreshPeriod: 5000
       timeoutDuration: 1000ms
 
-resilience4j.retry:
-  instances:
-    retryOrderService:
-      maxRetryAttempts: 5
-      waitDuration: 10000
-      retry-exceptions:
-        - java.util.concurrent.TimeoutException
+#resilience4j.retry:
+#  instances:
+#    retryOrderService:
+#      maxRetryAttempts: 50
+#      waitDuration: 10000
+#      retry-exceptions:
+#        - java.util.concurrent.TimeoutException
 
 resilience4j.bulkhead:
   instances:
@@ -80,3 +81,6 @@ resilience4j.thread-pool-bulkhead:
       maxThreadPoolSize: 1
       coreThreadPoolSize: 1
       queueCapacity: 1
+
+api:
+  endpoints: "payment-service:8000,payment-service:8001"

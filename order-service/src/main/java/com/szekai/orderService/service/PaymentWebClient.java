@@ -1,4 +1,4 @@
-package com.szekai.OrderService.service;
+package com.szekai.orderService.service;
 
 import io.github.resilience4j.bulkhead.annotation.Bulkhead;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
@@ -6,12 +6,14 @@ import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import io.github.resilience4j.retry.annotation.Retry;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
+import org.springframework.cloud.client.loadbalancer.reactive.ReactorLoadBalancerExchangeFilterFunction;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeoutException;
@@ -22,14 +24,24 @@ public class PaymentWebClient {
     @Autowired
     private WebClient.Builder webClientBuilder;
 
-    private final String baseUrl = "http://payment-service";
+//    @Autowired
+//    private DiscoveryClient discoveryClient;
 
-    @CircuitBreaker(name = "orderService", fallbackMethod = "buildFallbackPaymentList" )
-    @RateLimiter(name = "orderService", fallbackMethod = "buildFallbackPayment2List")
+    @Autowired
+    private ReactorLoadBalancerExchangeFilterFunction lbFunction;
+
+    private final String baseUrl = "http://payment-service";
+//    private final String baseUrl = "http://localhost";
+
+//    @CircuitBreaker(name = "orderService", fallbackMethod = "buildFallbackPaymentList" )
+//    @RateLimiter(name = "orderService", fallbackMethod = "buildFallbackPayment2List")
     @Retry(name = "retryOrderService", fallbackMethod = "buildFallbackPayment3List")
-    @Bulkhead(name = "bulkheadOrderService", type= Bulkhead.Type.THREADPOOL, fallbackMethod = "buildFallbackPayment4List")
+//    @Bulkhead(name = "bulkheadOrderService", type= Bulkhead.Type.THREADPOOL, fallbackMethod = "buildFallbackPayment4List")
     public Mono<String> getPaymentFromWebClient(String clientId) throws TimeoutException {
-        randomlyRunLong();
+
+
+//        randomlyRunLong();
+        log.info("getPaymentFromWebClient");
         Mono<String> result;
         if (clientId.equalsIgnoreCase("admin")) {
             result = webClientBuilder.baseUrl(baseUrl)

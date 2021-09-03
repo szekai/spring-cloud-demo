@@ -1,4 +1,4 @@
-package com.szekai.OrderService;
+package com.szekai.orderService;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -9,7 +9,7 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 @SpringBootApplication
 @RefreshScope
 @EnableDiscoveryClient
-@EnableEurekaClient
+//@EnableEurekaClient
 public class OrderServiceApplication {
 
 	public static void main(String[] args) {

@@ -1,4 +1,4 @@
-package com.szekai.OrderService;
+package com.szekai.orderService.config;
 
 import java.io.IOException;
 
