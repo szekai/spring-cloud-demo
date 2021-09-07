@@ -16,7 +16,8 @@ import org.springframework.web.reactive.function.client.WebClient;
 @Configuration
 @Slf4j
 //@LoadBalancerClient(name = "api-gateway", configuration = LBExampleConfiguration.class)
-@LoadBalancerClient(value = "order-service", configuration = ReactorLoadBalancerConfig.class)
+//value name for the target service, the name must be the same name registered in Eureka.
+@LoadBalancerClient(name = "payment-service", configuration = ReactorLoadBalancerConfig.class)
 public class ConfigurationProvider {
 
     @Bean

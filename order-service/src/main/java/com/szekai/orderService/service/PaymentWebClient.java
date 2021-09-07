@@ -33,9 +33,9 @@ public class PaymentWebClient {
     private final String baseUrl = "http://payment-service";
 //    private final String baseUrl = "http://localhost";
 
-//    @CircuitBreaker(name = "orderService", fallbackMethod = "buildFallbackPaymentList" )
+    @CircuitBreaker(name = "orderService", fallbackMethod = "buildFallbackPaymentList" )
 //    @RateLimiter(name = "orderService", fallbackMethod = "buildFallbackPayment2List")
-    @Retry(name = "retryOrderService", fallbackMethod = "buildFallbackPayment3List")
+//    @Retry(name = "retryOrderService", fallbackMethod = "buildFallbackPayment3List")
 //    @Bulkhead(name = "bulkheadOrderService", type= Bulkhead.Type.THREADPOOL, fallbackMethod = "buildFallbackPayment4List")
     public Mono<String> getPaymentFromWebClient(String clientId) throws TimeoutException {
 

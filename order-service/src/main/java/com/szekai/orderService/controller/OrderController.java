@@ -3,6 +3,7 @@ package com.szekai.orderService.controller;
 import com.szekai.orderService.service.PaymentWebClient;
 import com.szekai.orderService.vo.Order;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.kie.api.runtime.KieSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +14,7 @@ import java.util.concurrent.TimeoutException;
 @RestController
 @RequestMapping("/order")
 @RequiredArgsConstructor
+@Slf4j
 public class OrderController {
     private final PaymentWebClient webClientController;
     @Autowired
@@ -21,7 +23,9 @@ public class OrderController {
     @GetMapping("/greet")
     public Mono<String> greetDemo() throws TimeoutException {
         return webClientController.getPaymentFromWebClient("admin")
-                .retry(5).map(greeting -> String.format("%s %s", "Order", greeting));
+                .retry(5).map(greeting -> {
+                    log.info(greeting);
+                    return String.format("%s: %s", "Order", greeting);});
     }
 
 

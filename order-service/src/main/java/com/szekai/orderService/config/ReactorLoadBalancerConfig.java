@@ -8,6 +8,8 @@ import org.springframework.cloud.loadbalancer.support.LoadBalancerClientFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
 
+
+//Don't need to add @Configuration here
 public class ReactorLoadBalancerConfig {
     @Bean
     ReactorLoadBalancer<ServiceInstance> randomLoadBalancer(Environment environment,

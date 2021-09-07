@@ -36,5 +36,5 @@ eureka:
 
 successful:
   call:
-    divisor: 2
+    divisor: 1
 
