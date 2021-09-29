@@ -23,7 +23,7 @@ public class OrderController {
     @GetMapping("/greet")
     public Mono<String> greetDemo() throws TimeoutException {
         return webClientController.getPaymentFromWebClient("admin")
-                .retry(5).map(greeting -> {
+                .map(greeting -> {
                     log.info(greeting);
                     return String.format("%s: %s", "Order", greeting);});
     }

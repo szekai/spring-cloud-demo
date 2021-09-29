@@ -3,23 +3,28 @@ package com.szekai.orderService.service;
 import io.github.resilience4j.bulkhead.annotation.Bulkhead;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
-import io.github.resilience4j.retry.annotation.Retry;
+//import io.github.resilience4j.retry.annotation.Retry;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.cloud.client.loadbalancer.reactive.ReactorLoadBalancerExchangeFilterFunction;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
+import reactor.util.retry.Retry;
 
+import java.time.Duration;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeoutException;
 
 @Slf4j
 @Service
+@AllArgsConstructor
 public class PaymentWebClient {
     @Autowired
     private WebClient.Builder webClientBuilder;
@@ -27,13 +32,13 @@ public class PaymentWebClient {
 //    @Autowired
 //    private DiscoveryClient discoveryClient;
 
-    @Autowired
-    private ReactorLoadBalancerExchangeFilterFunction lbFunction;
+//    @Autowired
+//    private ReactorLoadBalancerExchangeFilterFunction lbFunction;
 
-    private final String baseUrl = "http://payment-service";
+    private String baseUrl = "http://payment-service";
 //    private final String baseUrl = "http://localhost";
 
-    @CircuitBreaker(name = "orderService", fallbackMethod = "buildFallbackPaymentList" )
+    @CircuitBreaker(name = "orderService", fallbackMethod = "buildFallbackPaymentList")
 //    @RateLimiter(name = "orderService", fallbackMethod = "buildFallbackPayment2List")
 //    @Retry(name = "retryOrderService", fallbackMethod = "buildFallbackPayment3List")
 //    @Bulkhead(name = "bulkheadOrderService", type= Bulkhead.Type.THREADPOOL, fallbackMethod = "buildFallbackPayment4List")
@@ -50,7 +55,14 @@ public class PaymentWebClient {
                     .uri("/admin")
                     .accept(MediaType.APPLICATION_JSON)
                     .retrieve()
-                    .bodyToMono(String.class);
+                    .onStatus(HttpStatus::is5xxServerError,
+                            response -> Mono.error(new ServiceException("Server error", response.rawStatusCode())))
+                    .bodyToMono(String.class)
+                    .retryWhen(Retry.backoff(3, Duration.ofSeconds(2))
+                            .filter(throwable -> throwable instanceof ServiceException)
+                            .onRetryExhaustedThrow((retryBackoffSpec, retrySignal) -> {
+                                throw new ServiceException("External Service failed to process after max retries", HttpStatus.SERVICE_UNAVAILABLE.value());
+                            }));
         } else {
             log.error("Unable to get the response, passing default.");
             result = Mono.fromCallable(() -> "Error in call.");
@@ -58,29 +70,31 @@ public class PaymentWebClient {
 
         return result;
     }
+
     @SuppressWarnings("unused")
-    private Mono<String> buildFallbackPaymentList(String organizationId, Throwable t){
+    private Mono<String> buildFallbackPaymentList(String organizationId, Throwable t) {
         return Mono.fromCallable(() -> "Service no available, circuit breaker");
     }
 
-    private Mono<String> buildFallbackPayment2List(String organizationId, Throwable t){
+    private Mono<String> buildFallbackPayment2List(String organizationId, Throwable t) {
         return Mono.fromCallable(() -> "Service no available, rate limiter");
     }
 
-    private Mono<String> buildFallbackPayment3List(String organizationId, Throwable t){
+    private Mono<String> buildFallbackPayment3List(String organizationId, Throwable t) {
         return Mono.fromCallable(() -> "Service no available, retry");
     }
 
-    private Mono<String> buildFallbackPayment4List(String organizationId, Throwable t){
+    private Mono<String> buildFallbackPayment4List(String organizationId, Throwable t) {
         return Mono.fromCallable(() -> "Service no available, bulkhead");
     }
+
     private void randomlyRunLong() throws TimeoutException {
         Random rand = new Random();
         int randomNum = rand.nextInt((3 - 1) + 1) + 1;
-        if (randomNum==3) sleep();
+        if (randomNum == 3) sleep();
     }
 
-    private void sleep() throws TimeoutException{
+    private void sleep() throws TimeoutException {
         try {
             System.out.println("Sleep");
             Thread.sleep(5000);

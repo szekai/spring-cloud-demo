@@ -1,13 +1,13 @@
-package com.example;
+package com.szekai.configserver;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-public class ClientApplicationTests {
+class ConfigserverApplicationTests {
 
 	@Test
-	public void contextLoads() {
+	void contextLoads() {
 	}
 
 }

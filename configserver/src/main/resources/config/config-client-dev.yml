@@ -1,0 +1,7 @@
+user.role: Developer 
+db:
+  config:
+    driver: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/develop
+    user: developer
+    password: developer

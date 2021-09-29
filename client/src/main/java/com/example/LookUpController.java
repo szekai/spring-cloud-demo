@@ -1,15 +1,13 @@
 package com.example;
 
+
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.*;
+
 @RestController
 public class LookUpController {
 
@@ -47,14 +45,14 @@ public class LookUpController {
     @Value("${db.config.password}")
     private String password;
 
-    @RequestMapping(
-            value = "/dbinfo",
-            method = RequestMethod.GET
-    )
-    public DBinfo dbinfo(){
-        DBinfo db = new DBinfo(driver, url, user, password);
-        db.add(linkTo(methodOn(LookUpController.class).dbinfo()).withSelfRel());
-        return db;
-    }
+//    @RequestMapping(
+//            value = "/dbinfo",
+//            method = RequestMethod.GET
+//    )
+//    public DBinfo dbinfo(){
+//        DBinfo db = new DBinfo(driver, url, user, password);
+//        db.add(linkTo(methodOn(LookUpController.class).dbinfo()).withSelfRel());
+//        return db;
+//    }
 
 }

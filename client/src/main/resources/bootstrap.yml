@@ -1,10 +1,13 @@
-spring.application.name: config-client
-spring.profiles.active: development
-#spring.profiles.active: production
-spring.cloud.config.label: feature
 spring:
+  application:
+    name: config-client
+  profiles:
+    active: dev
   cloud:
     config:
-      url: http://localhost:8888
-      username: root
-      password: s3cr3t
+      uri: http://localhost:8071
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

@@ -1,7 +1,0 @@
-user.role: User
-db:
-  config:
-    driver: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/production
-    user: production
-    password: production
